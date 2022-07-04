@@ -36,6 +36,11 @@ export const Users = Configs.define('__tbl_users', {
         allowNull: false,
         defaultValue: generateIdentifier({ prefix: "REF-HOSP" })
     },
+    isactivated: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
     status: {
         type: Sequelize.INTEGER,
         allowNull: false,

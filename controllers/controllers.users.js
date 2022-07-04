@@ -34,7 +34,7 @@ export const UsersController = {
         try {
             
         } catch (error) {
-            
+            return Response(res, 500, {});
         }
     },
     signin: async (req, res, next) => {

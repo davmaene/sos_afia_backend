@@ -21,7 +21,7 @@ app.get("/", (req, res, next) => {
         200, 
         {
             "appOwner": process.env.APPOWNER,
-            "appName": process.env.APPNAME
+            "appName": process.env.APPNAME 
         }
     )
 });

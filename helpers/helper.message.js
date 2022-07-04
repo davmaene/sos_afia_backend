@@ -14,7 +14,7 @@ export const Response = (res, status, body) => {
             case 402:
             res.status(402).json({
                 status: 402,
-                message: "le numero de telephone est utiliser par un autre compte",
+                message: "Account not activate !",
                 data: body ? body : {}
             });
             break;
@@ -78,7 +78,7 @@ export const Response = (res, status, body) => {
             case 503: 
             res.status(503).json({
                 status: 503,
-                message: "Duplicate entry in deb",
+                message: "Duplicate entry in TABLE",
                 data: body ? body : {}
             })
             break;
