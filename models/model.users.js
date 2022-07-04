@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize';
 import { generateIdentifier } from '../helpers/helper.random.js';
-const { Configs } = require('../configs/Configs.js');
+import { Configs } from '../configs/Configs.js';
 
-const Users = Configs.define('__tbl_users', {
+export const Users = Configs.define('__tbl_users', {
     fsname: {
         type: Sequelize.STRING,
         allowNull: false
@@ -45,7 +45,3 @@ const Users = Configs.define('__tbl_users', {
     timestamps: false,
     freezeTableName: true
 });
-
-module.exports = {
-    Users
-}

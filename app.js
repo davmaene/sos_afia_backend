@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import uploader from 'express-fileupload';
 import { Response } from './helpers/helper.message.js';
 import cors from 'cors';
+import { Routes } from "./routes/routes.routes.js";
+import { WareValidateAccess } from "./middleware/ware.validateaccess.js";
 
 dotenv.config();
 const app = express();
@@ -23,6 +25,8 @@ app.get("/", (req, res, next) => {
         }
     )
 });
+
+app.use("/api", WareValidateAccess, Routes);
 
 app.use((req, res, next) => {
     return Response(res, 404, "There is nothing over here ! please the documentation!")
