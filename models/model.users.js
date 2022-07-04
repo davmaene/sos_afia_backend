@@ -34,7 +34,7 @@ export const Users = Configs.define('__tbl_users', {
     hospitalref: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: generateIdentifier({ prefix: "REF-HOSP" })
+        defaultValue: ""
     },
     isactivated: {
         type: Sequelize.INTEGER,

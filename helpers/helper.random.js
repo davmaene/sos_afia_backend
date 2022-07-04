@@ -9,3 +9,15 @@ export const generateIdentifier = ({ prefix }) => {
     
     return `${prefix ? prefix : "REF"}-${pfx}-${sfx}`;
 }
+export const randomLongNumber = ({ len }) => {
+    const len = 6;
+    const ret = [];
+
+    for(let k = 0; k < len; k++) ret.push(
+       Math.floor( Math.random() * 10 )
+    );
+    
+    let m = ret.join().toString();
+    m = m.replace(/,/g, "");
+    return m;
+}
