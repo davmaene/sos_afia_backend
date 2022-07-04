@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from 'dotenv';
 import uploader from 'express-fileupload';
 import { Response } from './helpers/helper.message.js';
+import cors from 'cors';
 
 dotenv.config();
 const app = express();
@@ -17,11 +18,15 @@ app.get("/", (req, res, next) => {
         res, 
         200, 
         {
-            
+            "appOwner": process.env.APPOWNER,
+            "appName": process.env.APPNAME
         }
     )
-})
+});
 
+app.use((req, res, next) => {
+    return Response(res, 404, "There is nothing over here ! please the documentation!")
+});
 
 app.listen(PORT, () => {
     console.log("----------------------------------------------------");
