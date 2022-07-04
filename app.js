@@ -13,7 +13,13 @@ app.use(express.json({ limit: '50mb' }));
 app.use(uploader());
 
 app.get("/", (req, res, next) => {
-
+    return Response(
+        res, 
+        200, 
+        {
+            
+        }
+    )
 })
 
 
