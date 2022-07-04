@@ -1,6 +1,6 @@
 import { fillphone } from "../helpers/helper.fillphone.js";
 import { Response } from "../helpers/helper.message.js"
-import { comparePWD } from "../helpers/helper.password.js";
+import { comparePWD, hashPWD } from "../helpers/helper.password.js";
 import { Users } from "../models/model.users.js";
 
 export const UsersController = {
@@ -11,9 +11,30 @@ export const UsersController = {
         return Response(res, 401, "This request mus have at least !fsname || !lsname || !phone || !gender || !age || !password");
         
         try {
-            
+            const pwd = await hashPWD(password);
+            await Users.create({
+                fsname: fsname.toLowerCase(),
+                lsname: lsname.toLowerCase(),
+                nickname: nickname ? nickname : process.env.APPESCAPESTRING,
+                phone: fillphone(phone),
+                password: pwd
+            })
+            .then(user => {
+                if(user instanceof Users) return Response(res, 200, user);
+                else return Response(res, 400, {})
+            })
+            .catch(err => {
+                return Response(res, 500, err);
+            })
         } catch (error) {
             return Response(res, 500, error);
+        }
+    },
+    validateaccount: async (req, res, next) => {
+        try {
+            
+        } catch (error) {
+            
         }
     },
     signin: async (req, res, next) => {

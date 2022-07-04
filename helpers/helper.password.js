@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 export const hashPWD = async (oldplaintext, cb) => {
-    return bcrypt.hash(oldplaintext, process.env.app_accessapp)
+    return bcrypt.hash(oldplaintext, 10);
 }
 
 export const comparePWD = async ({ oldplaintext, hashedtext }, cb) => {

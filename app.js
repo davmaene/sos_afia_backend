@@ -27,13 +27,12 @@ app.get("/", (req, res, next) => {
 });
 
 app.use("/api", WareValidateAccess, Routes);
-
 app.use((req, res, next) => {
     return Response(res, 404, "There is nothing over here ! please the documentation!")
 });
 
 app.listen(PORT, () => {
     console.log("----------------------------------------------------");
-    console.log(`----- App running on port ::: ${PORT} ------`);
+    console.log(`----- App running on port ::: ${ PORT } ------`);
     console.log("----------------------------------------------------");
 });
