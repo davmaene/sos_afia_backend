@@ -102,6 +102,7 @@ export const UsersController = {
             return Response(res, 500, error);
         }
     },
+    // function excecuted on send SOS Alarm 
     sendsos: async (req, res, next) => {
 
     }
