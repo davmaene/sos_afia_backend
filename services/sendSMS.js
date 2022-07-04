@@ -13,7 +13,7 @@ export const sendMessage = async ({
 }, cb) => {
     project.sendMessage({
         to_number: phone, 
-        content: `Bonjour, votre code de vérificaction de Payondego est ::: ${code}`
+        content
     }, function(err, message) {
         if(err){
             cb(err, undefined)

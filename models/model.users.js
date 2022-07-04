@@ -1,7 +1,8 @@
 import Sequelize from 'sequelize';
+import { generateIdentifier } from '../helpers/helper.random.js';
 const { Configs } = require('../configs/Configs.js');
 
-const Users = Configs.define('__tbl_admins', {
+const Users = Configs.define('__tbl_users', {
     fsname: {
         type: Sequelize.STRING,
         allowNull: false
@@ -10,26 +11,30 @@ const Users = Configs.define('__tbl_admins', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    telephone: {
+    nickname: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    avatar: {
+    phone: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
     },
-    email: {
+    gender: {
         type: Sequelize.STRING,
+        allowNull: false
+    },
+    age: {
+        type: Sequelize.INTEGER,
         allowNull: false
     },
     password: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    accesslevel: {
+    hospitalref: {
         type: Sequelize.STRING,
-        allowNull: true,
-        defaultValue: 'r'
+        allowNull: false,
+        defaultValue: generateIdentifier({ prefix: "REF-HOSP" })
     },
     status: {
         type: Sequelize.INTEGER,
