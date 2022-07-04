@@ -9,8 +9,8 @@ export const generateIdentifier = ({ prefix }) => {
     
     return `${prefix ? prefix : "REF"}-${pfx}-${sfx}`;
 }
-export const randomLongNumber = ({ len }) => {
-    const len = 6;
+export const randomLongNumber = ({ length }) => {
+    const len = length && !isNaN(parseInt(length)) ? length : 6;
     const ret = [];
 
     for(let k = 0; k < len; k++) ret.push(

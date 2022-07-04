@@ -65,7 +65,7 @@ export const UsersController = {
                             else return Response(res, 203, {});
                         })
                     } else {
-                        const code = randomLongNumber();
+                        const code = randomLongNumber({ length: 6 });
                         sendMessage({
                             phone: fillphone(phone),
                             code: null,
@@ -76,9 +76,11 @@ export const UsersController = {
                 }else return Response(res, 203, {});
             })
             .catch(err => {
+                console.log("In model => ",err);
                 return Response(res, 500, err);
             })
         } catch (error) {
+            console.log("In catch => ", error);
             return Response(res, 500, error);
         }
     },
