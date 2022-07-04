@@ -36,6 +36,22 @@ export const UsersController = {
             return Response(res, 500, error);
         }
     },
+    // function executed on resending code for activation account
+    resendcodevalidation: async (req, res, next) => {
+        const { phone, oldecode } = req.body;
+        if(!phone) return Response(res, 401, "This request mus have at least !phonenumber ")
+        try {
+            sendMessage({
+                phone: fillphone(phone),
+                code: null,
+                content: `Nous avons détecter aue votre compte n'est pas encore activé voici votre code de validation #${code} `
+            }, (e, d) => {
+                if(d) return Response(res, 200, )
+            });  
+        } catch (error) {
+           return Response(res, 500, error);
+        }
+    },
     // function executed on VALIDATE ACCOUNT
     validateaccount: async (req, res, next) => {
         try {
