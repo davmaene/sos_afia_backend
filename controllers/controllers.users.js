@@ -59,7 +59,7 @@ export const UsersController = {
         try {
             const { code, phone } = req.body;
             if(!code || !phone) return Response(res, 401, "This request mus have at least !code || !phone ! ");
-
+            return Response(res, 200, req.body);
         } catch (error) {
             return Response(res, 500, {});
         }
@@ -104,6 +104,12 @@ export const UsersController = {
     },
     // function excecuted on send SOS Alarm 
     sendsos: async (req, res, next) => {
-
+        const { latitude, longitude, hospitalref, phone, fsname, lsname } = req.body;
+        if(!latitude || !longitude ||phone ||fsname ||lsname) return Response(res, 401, "This request mus have at least !latitude || !longitude ||phone ||fsname ||lsname" );
+        try {
+            return Response(res, 200, req.body)
+        } catch (error) {
+            return Response(res, 500, error)
+        }
     }
 }
