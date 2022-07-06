@@ -5,17 +5,28 @@ import { Response } from './helpers/helper.message.js';
 import cors from 'cors';
 import { Routes } from "./routes/routes.routes.js";
 import { WareValidateAccess } from "./middleware/ware.validateaccess.js";
+import rateLimit from 'express-rate-limit';
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3900;
 
+const limiter = rateLimit({
+	windowMs: 2 * 60 * 1000, // 15 minutes
+	max: 17, // Limit each IP to 5 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
 app.use(cors());
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.json({ limit: '50mb' }));
 app.use(uploader());
+app.use(limiter);
 
 app.get("/", (req, res, next) => {
+    // res.setHeader();
+    res.setHeader("token", "zaqxswcdevfrbgt");
     return Response(
         res, 
         200, 
