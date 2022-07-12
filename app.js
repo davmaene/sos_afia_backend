@@ -8,6 +8,7 @@ import { WareValidateAccess } from "./middleware/ware.validateaccess.js";
 import rateLimit from 'express-rate-limit';
 
 dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 3900;
 
@@ -26,7 +27,7 @@ app.use(limiter);
 
 app.get("/", (req, res, next) => {
     // res.setHeader();
-    res.setHeader("token", "zaqxswcdevfrbgt");
+    res.setHeader("token", "");
     return Response(
         res, 
         200, 
