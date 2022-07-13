@@ -38,18 +38,16 @@ export const UsersController = {
     },
     // function executed on resending code for activation account
     resendcodevalidation: async (req, res, next) => {
-        const { phone, oldecode } = req.body;
+        const { phone, oldcode } = req.body;
         if(!phone) return Response(res, 401, "This request mus have at least !phonenumber ");
-        const code = randomLongNumber({ length: 6 });
         try {
+            const code = randomLongNumber({ length: 6 });
             sendMessage({
                 phone: fillphone(phone),
                 code: null,
-                content: `Nous avons détecter aue votre compte n'est pas encore activé voici votre code de validation #${code} `
-            }, (e, d) => {
-                if(d) return Response(res, 200, { code });
-                else return Response(res, 400, { code });
-            });  
+                content: `Nous avons détecter que votre compte n'est pas encore activé voici votre code de validation #${code} `
+            }, (e, d) => {});
+            return Response(res, 200, { user : {}, code })  
         } catch (error) {
            return Response(res, 500, error);
         }
@@ -58,8 +56,27 @@ export const UsersController = {
     validateaccount: async (req, res, next) => {
         try {
             const { code, phone } = req.body;
-            if(!code || !phone) return Response(res, 401, "This request mus have at least !code || !phone ! ");
-            return Response(res, 200, req.body);
+            if(!phone) return Response(res, 401, "This request mus have at least || !phone ! ");
+            await Users.findOne({
+                where: {
+                    phone: fillphone(phone),
+                    status: 1
+                }
+            })
+            .catch(us => {
+                if(us instanceof Users){
+                    us.update({
+                        isactivated: 1
+                    })
+                    .then(U =>  Response(res, 200, us))
+                    .catch(e => Response(res, 500, us))
+                }else{
+                    return Response(res, 402, req.body);
+                }
+            })
+            .catch(er => {
+                return Response(res, 500, req.body);
+            })
         } catch (error) {
             return Response(res, 500, {});
         }
@@ -77,26 +94,25 @@ export const UsersController = {
             })
             .then(user => {
                 if(user instanceof Users){
-                    
-                        comparePWD({hashedtext: user.password, oldplaintext: password}, (e, d) => {
-                            if(d){
-                                if(user.isactivated === 1){
-                                    return Response(res, 200, user);
-                                } else {
-                                    const code = randomLongNumber({ length: 6 });
-                                    sendMessage({
-                                        phone: fillphone(phone),
-                                        code: null,
-                                        content: `Nous avons détecter aue votre compte n'est pas encore activé voici votre code de validation #${code} `
-                                    }, (e, d) => {});
-                                    return Response(res, 402, { user, code });
-                                }
-                            }else return Response(res, 203, {});
-                        })
+                    comparePWD({hashedtext: user.password, oldplaintext: password}, (e, d) => {
+                        if(d){
+                            if(user.isactivated === 1){
+                                return Response(res, 200, user);
+                            } else {
+                                const code = randomLongNumber({ length: 6 });
+                                sendMessage({
+                                    phone: fillphone(phone),
+                                    code: null,
+                                    content: `Nous avons détecter que votre compte n'est pas encore activé voici votre code de validation #${code} `
+                                }, (e, d) => {});
+                                return Response(res, 402, { user, code });
+                            }
+                        }else return Response(res, 203, {});
+                    })
                 }else return Response(res, 203, {});
             })
             .catch(err => {
-                console.log("In model => ",err);
+                console.log("In model => ", err);
                 return Response(res, 500, err);
             })
         } catch (error) {

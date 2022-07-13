@@ -6,6 +6,7 @@ export const UserRoutes = express.Router()
     UserRoutes.post("/user/signin", UsersController.signin) // connexion utilisateur
     UserRoutes.post("/user/signup", UsersController.signup) // creation de compte utilisateur
     UserRoutes.post("/user/sendsos", UsersController.sendsos) // cas utilisateur envoi un sos
+    UserRoutes.post("/user/resendcode", UsersController.resendcodevalidation) // cas utilisateur envoi un sos
 
 export const HospitalRoutes = express.Router()
     HospitalRoutes.get("/list", HospitalController.list)
