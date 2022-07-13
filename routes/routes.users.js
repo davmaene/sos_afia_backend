@@ -8,5 +8,5 @@ export const UserRoutes = express.Router()
     UserRoutes.post("/user/sendsos", UsersController.sendsos) // cas utilisateur envoi un sos
 
 export const HospitalRoutes = express.Router()
-    HospitalRoutes.get("/hospital/list", HospitalController.list)
+    HospitalRoutes.get("/list", HospitalController.list)
     HospitalRoutes.post("/hospital/add", HospitalController.addhospital)

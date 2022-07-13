@@ -77,20 +77,22 @@ export const UsersController = {
             })
             .then(user => {
                 if(user instanceof Users){
-                    if(user.isactivated === 1){
+                    
                         comparePWD({hashedtext: user.password, oldplaintext: password}, (e, d) => {
-                            if(d) return Response(res, 200, user);
-                            else return Response(res, 203, {});
+                            if(d){
+                                if(user.isactivated === 1){
+                                    return Response(res, 200, user);
+                                } else {
+                                    const code = randomLongNumber({ length: 6 });
+                                    sendMessage({
+                                        phone: fillphone(phone),
+                                        code: null,
+                                        content: `Nous avons détecter aue votre compte n'est pas encore activé voici votre code de validation #${code} `
+                                    }, (e, d) => {});
+                                    return Response(res, 402, { user, code });
+                                }
+                            }else return Response(res, 203, {});
                         })
-                    } else {
-                        const code = randomLongNumber({ length: 6 });
-                        sendMessage({
-                            phone: fillphone(phone),
-                            code: null,
-                            content: `Nous avons détecter aue votre compte n'est pas encore activé voici votre code de validation #${code} `
-                        }, (e, d) => {});
-                        return Response(res, 402, { user, code });
-                    }
                 }else return Response(res, 203, {});
             })
             .catch(err => {

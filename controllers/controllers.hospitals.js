@@ -21,7 +21,7 @@ export const HospitalController = {
     },
     addhospital: async (req, res, next) => {
         const { name, latitudes, longitudes } = req.body;
-        if(!name || !latitudes || !longitudes) return Response(res, 401, "this request must have at leat !name || !latitudes || !longitudes")
+        if(!name || !latitudes || !longitudes) return Response(res, 401, "this request must have at least !name || !latitudes || !longitudes")
         try {
             await Hospital.create({
                 name,

@@ -5,4 +5,4 @@ import { HospitalRoutes, UserRoutes } from './routes.users.js';
 export const Routes = express.Router();
             Routes.use("/users", UserRoutes)
             Routes.use("/admins", AdminsRoutes)
-            Routes.use("hospitals", HospitalRoutes)
+            Routes.use("/hospitals", HospitalRoutes)
