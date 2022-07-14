@@ -54,6 +54,7 @@ export const UsersController = {
     },
     // function executed on VALIDATE ACCOUNT
     validateaccount: async (req, res, next) => {
+        console.log(" Body => ",req.body);
         try {
             const { code, phone } = req.body;
             if(!phone) return Response(res, 401, "This request mus have at least || !phone ! ");
@@ -63,13 +64,13 @@ export const UsersController = {
                     status: 1
                 }
             })
-            .catch(us => {
+            .then(us => {
                 if(us instanceof Users){
                     us.update({
                         isactivated: 1
                     })
-                    .then(U =>  Response(res, 200, us))
-                    .catch(e => Response(res, 500, us))
+                    .then(U => { return Response(res, 200, us) })
+                    .catch(e => { return Response(res, 500, us) })
                 }else{
                     return Response(res, 402, req.body);
                 }
