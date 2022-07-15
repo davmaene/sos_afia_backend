@@ -1,9 +1,13 @@
 import { fillphone } from "../helpers/helper.fillphone.js";
 import { Response } from "../helpers/helper.message.js";
 import { comparePWD, hashPWD } from "../helpers/helper.password.js";
-import { randomLongNumber } from "../helpers/helper.random.js";
+import { generateIdentifier, randomLongNumber } from "../helpers/helper.random.js";
+import { SOS } from "../models/model.sos.js";
 import { Users } from "../models/model.users.js";
 import { sendMessage } from "../services/services.sendsms.js";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const UsersController = {
 
@@ -123,10 +127,32 @@ export const UsersController = {
     },
     // function excecuted on send SOS Alarm 
     sendsos: async (req, res, next) => {
-        const { latitude, longitude, hospitalref, phone, fsname, lsname } = req.body;
-        if(!latitude || !longitude ||phone ||fsname ||lsname) return Response(res, 401, "This request mus have at least !latitude || !longitude ||phone ||fsname ||lsname" );
+        const { latitude, longitude, hospitalref, phone, fsname, lsname, altitude, speed } = req.body;
+        // if(!latitude || !longitude || !phone || !altitude || !speed) return Response(res, 401, "This request mus have at least !latitude || !longitude || !phone || !altitude || !speed" );
         try {
-            return Response(res, 200, req.body)
+           await SOS.create({
+             latitude,
+             longitude,
+             altitude,
+             speed,
+             hospitalref: hospitalref ? hospitalref : 0,
+             phone: fillphone(phone),
+             refsos: generateIdentifier({prefix: "sos"})
+           })
+           .then(sos => {
+                if(sos){
+                    sendMessage({
+                        phone: fillphone(process.env.MODULEGSMNUMBER),
+                        content: `#code: SOS\n#coords: latitude->${latitude} | longitude->${longitude} | altitude->${altitude} | vitesse->${speed}`
+                    }, (err, done) => {});
+                    return Response(res, 200, sos)
+                }else{
+                    return Response(res, 400, req.body)
+                }
+           })
+           .catch(err => {
+                return Response(res, 500, err)
+           })
         } catch (error) {
             return Response(res, 500, error)
         }
