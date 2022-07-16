@@ -143,8 +143,12 @@ export const UsersController = {
                 if(sos){
                     sendMessage({
                         phone: fillphone(process.env.MODULEGSMNUMBER),
-                        content: `#code: SOS\n#coords: latitude->${latitude} | longitude->${longitude} | altitude->${altitude} | vitesse->${speed}`
-                    }, (err, done) => {});
+                        content: `geo:${latitude},${longitude}`
+                        // `#code: SOS\n#coords: latitude->${latitude} | longitude->${longitude} | altitude->${altitude} | vitesse->${speed}`
+                    }, (err, done) => {
+                        // console.log(" Error on sending sms => ",err);
+                        // console.log(" No Error on sending sms => ",done);
+                    });
                     return Response(res, 200, sos)
                 }else{
                     return Response(res, 400, req.body)
