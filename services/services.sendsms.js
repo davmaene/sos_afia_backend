@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const tr = new telerivet.API(process.env.app_telerivetapikey);
-const project = tr.initProjectById(process.env.app_projectid);
+const tr = new telerivet.API(process.env.APIKEYTELERIVET);
+const project = tr.initProjectById(process.env.APIPROJECTID);
 
 export const sendMessage = async ({
     phone,

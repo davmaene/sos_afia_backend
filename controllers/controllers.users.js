@@ -128,7 +128,7 @@ export const UsersController = {
     // function excecuted on send SOS Alarm 
     sendsos: async (req, res, next) => {
         const { latitude, longitude, hospitalref, phone, fsname, lsname, altitude, speed } = req.body;
-        // if(!latitude || !longitude || !phone || !altitude || !speed) return Response(res, 401, "This request mus have at least !latitude || !longitude || !phone || !altitude || !speed" );
+        // if(!latitude || !longitude || !phone ) return Response(res, 401, "This request mus have at least !latitude || !longitude || !phone || !altitude || !speed" );
         try {
            await SOS.create({
              latitude,

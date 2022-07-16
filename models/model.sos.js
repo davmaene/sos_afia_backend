@@ -23,6 +23,14 @@ export const SOS = Configs.define('__tbl_sos', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    altitude: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    speed: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     status: {
         type: Sequelize.INTEGER,
         allowNull: false,
