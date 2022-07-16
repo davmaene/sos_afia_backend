@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { generateIdentifier } from '../helpers/helper.random.js';
-import { Configs } from '../configs/Configs.js';
+import { Configs } from '../configs/configs.js';
 
 export const Hospital = Configs.define('__tbl_hospital', {
     name: {
