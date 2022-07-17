@@ -2,40 +2,30 @@ import Sequelize from 'sequelize';
 import { generateIdentifier } from '../helpers/helper.random.js';
 import { Configs } from '../configs/configs.js';
 
-export const SOS = Configs.define('__tbl_sos', {
-    hospitalref: {
+export const Customersms = Configs.define('__tbl_customizedsms', {
+    from: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    refsos: {
+    fill: {
         type: Sequelize.STRING,
         allowNull: false,
+        defaultValue: generateIdentifier({prefix: "hosp-"})
     },
-    description: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    phone: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    latitude: {
+    to: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    longitude: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    altitude: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    speed: {
+    content: {
         type: Sequelize.STRING,
         allowNull: false
     },
     status: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 1
+    },
+    createdon: {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 1

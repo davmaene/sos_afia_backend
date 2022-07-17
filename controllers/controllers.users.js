@@ -127,13 +127,14 @@ export const UsersController = {
     },
     // function excecuted on send SOS Alarm 
     sendsos: async (req, res, next) => {
-        const { latitude, longitude, hospitalref, phone, fsname, lsname, altitude, speed } = req.body;
+        const { latitude, longitude, hospitalref, phone, fsname, lsname, altitude, speed, description } = req.body;
         // if(!latitude || !longitude || !phone ) return Response(res, 401, "This request mus have at least !latitude || !longitude || !phone || !altitude || !speed" );
         try {
            await SOS.create({
              latitude,
              longitude,
              altitude,
+             description,
              speed,
              hospitalref: hospitalref ? hospitalref : 0,
              phone: fillphone(phone),
@@ -146,6 +147,7 @@ export const UsersController = {
                     //     phone: fillphone(process.env.MODULEGSMNUMBER),
                     //     content: `#code: SOS\n#coords: latitude->${latitude} | longitude->${longitude} | altitude->${altitude} | vitesse->${speed}`
                     // }, (err, done) => {});
+                    console.log(sos);
                     return Response(res, 200, sos)
                 }else{
                     return Response(res, 400, req.body)
@@ -161,7 +163,8 @@ export const UsersController = {
     // send customer message 
     sendcustomizedsmsonsos: async () => {
         try {
-            
+            const { phone, hospitalref, content } = req.body;
+            // await 
         } catch (error) {
             return Response(res, 500, error)
         }
