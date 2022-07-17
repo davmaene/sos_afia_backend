@@ -141,14 +141,11 @@ export const UsersController = {
            })
            .then(sos => {
                 if(sos){
-                    sendMessage({
-                        phone: fillphone(process.env.MODULEGSMNUMBER),
-                        content: `geo:${latitude},${longitude}`
-                        // `#code: SOS\n#coords: latitude->${latitude} | longitude->${longitude} | altitude->${altitude} | vitesse->${speed}`
-                    }, (err, done) => {
-                        // console.log(" Error on sending sms => ",err);
-                        // console.log(" No Error on sending sms => ",done);
-                    });
+                    // `geo:${latitude},${longitude}`
+                    // sendMessage({
+                    //     phone: fillphone(process.env.MODULEGSMNUMBER),
+                    //     content: `#code: SOS\n#coords: latitude->${latitude} | longitude->${longitude} | altitude->${altitude} | vitesse->${speed}`
+                    // }, (err, done) => {});
                     return Response(res, 200, sos)
                 }else{
                     return Response(res, 400, req.body)
@@ -157,6 +154,14 @@ export const UsersController = {
            .catch(err => {
                 return Response(res, 500, err)
            })
+        } catch (error) {
+            return Response(res, 500, error)
+        }
+    },
+    // send customer message 
+    sendcustomizedsmsonsos: async () => {
+        try {
+            
         } catch (error) {
             return Response(res, 500, error)
         }
