@@ -168,5 +168,33 @@ export const UsersController = {
         } catch (error) {
             return Response(res, 500, error)
         }
+    },
+    updatehospitalref: async (req, res, next) => {
+        const { hospitalref, id, phone } = req.body;
+        try {
+            await Users.findOne({
+                where: {
+                    id,
+                    status: 1
+                }
+            })
+            .then(us => {
+                if(us instanceof Users){
+                    // 
+                    us.update({
+                        hospitalref
+                    })
+                    .then(U => Response(res, 200, us))
+                    .catch(E => Response(res, 400, us))
+                }else{
+                    return Response(res, 404, req.body)
+                }
+            })
+            .catch(err => {
+                return Response(res, 500, err)
+            })
+        } catch (error) {
+            return Response(res, 500, error)
+        }
     }
 }

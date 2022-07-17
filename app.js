@@ -13,10 +13,15 @@ const app = express();
 const PORT = process.env.PORT || 3900;
 
 const limiter = rateLimit({
-	windowMs: 2 * 60 * 1000, // 15 minutes
-	max: 17, // Limit each IP to 5 requests per `window` (here, per 15 minutes)
+	windowMs: 2 * 60 * 1000, // 2 minutes
+	max: 4, // Limit each IP to 5 requests per `window` (here, per 15 minutes)
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers,
+    message: {
+        status: 403,
+        message: "Y'v reached the limit of request in 15 mins",
+        data: {}
+    }
 });
 
 app.use(cors());
@@ -26,16 +31,10 @@ app.use(uploader());
 app.use(limiter);
 
 app.get("/", (req, res, next) => {
-    // res.setHeader();
-    res.setHeader("token", "");
-    return Response(
-        res, 
-        200, 
-        {
+    return Response(res, 200, {
             "appOwner": process.env.APPOWNER,
             "appName": process.env.APPNAME 
-        }
-    )
+        })
 });
 
 app.use("/api", WareValidateAccess, Routes);
