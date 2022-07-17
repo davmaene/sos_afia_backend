@@ -6,6 +6,7 @@ import cors from 'cors';
 import { Routes } from "./routes/routes.routes.js";
 import { WareValidateAccess } from "./middleware/ware.validateaccess.js";
 import rateLimit from 'express-rate-limit';
+import { RessourcesRoutes } from "./routes/routes.ressources.js";
 
 dotenv.config();
 
@@ -30,12 +31,14 @@ app.use(express.json({ limit: '50mb' }));
 app.use(uploader());
 app.use(limiter);
 
-app.get("/", (req, res, next) => {
+app.get("/", WareValidateAccess, (req, res, next) => {
     return Response(res, 200, {
-            "appOwner": process.env.APPOWNER,
-            "appName": process.env.APPNAME 
-        })
+        "appOwner": process.env.APPOWNER,
+        "appName": process.env.APPNAME 
+    })
 });
+
+app.use("/api/ressources", WareValidateAccess, RessourcesRoutes)
 
 app.use("/api", WareValidateAccess, Routes);
 app.use((req, res, next) => {
