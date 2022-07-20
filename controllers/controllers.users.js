@@ -198,5 +198,5 @@ export const UsersController = {
         } catch (error) {
             return Response(res, 500, error)
         }
-    }
+    },
 }
