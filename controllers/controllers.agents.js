@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import { Response } from '../helpers/helper.message.js';
 import { Agents } from '../models/nodel.agents.js';
 import { Users } from '../models/model.users.js';
-import { hashPWD } from '../helpers/helper.password';
+import { comparePWD, hashPWD } from '../helpers/helper.password';
 import { fillphone } from '../helpers/helper.fillphone';
 
 dotenv.config()
@@ -33,6 +33,34 @@ export const AgentsControllers = {
                 return Response(res, 503, err);
             })
         } catch (error) {
+            return Response(res, 500, error);
+        }
+    },
+    // function executed on SIGNIN
+    signin: async (req, res, next) => {
+        const { email, password } = req.body;
+        if(!email || !password) return Response(res, 401, "This request mus have at least ! !phone || !password");
+        try {
+            await Agents.findOne({
+                where: {
+                    email: email.toLowerCase(),
+                    status: 1
+                }
+            })
+            .then(user => {
+                if(user instanceof Users){
+                    comparePWD({hashedtext: user.password, oldplaintext: password}, (e, d) => {
+                        if(d) return Response(res, 200, user);
+                        else return Response(res, 203, {});
+                    })
+                }else return Response(res, 203, {});
+            })
+            .catch(err => {
+                // console.log("In model => ", err);
+                return Response(res, 500, err);
+            })
+        } catch (error) {
+            // console.log("In catch => ", error);
             return Response(res, 500, error);
         }
     },
