@@ -21,6 +21,7 @@ export const AgentsControllers = {
                 lsname: lsname.toLowerCase(),
                 nickname: nickname ? nickname : process.env.APPESCAPESTRING,
                 phone: fillphone(phone),
+                email: email.toLowerCase(),
                 password: pwd,
                 hospitalref: hospitalref ? hospitalref : ""
             })
