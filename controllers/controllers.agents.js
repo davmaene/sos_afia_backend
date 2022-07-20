@@ -4,6 +4,7 @@ import { Agents } from '../models/nodel.agents.js';
 import { Users } from '../models/model.users.js';
 import { comparePWD, hashPWD } from '../helpers/helper.password';
 import { fillphone } from '../helpers/helper.fillphone';
+import { Expo } from 'expo-server-sdk';
 
 dotenv.config()
 
@@ -65,6 +66,7 @@ export const AgentsControllers = {
         }
     },
     loadme: async (req, res, next) => {
+        const { email, pushtoken } = req.body;
         try {
             await Agents.findOne({
                 where: {
@@ -73,7 +75,17 @@ export const AgentsControllers = {
                 }
             })
             .then(ag => {
-
+                if(ag instanceof Agents){
+                    if(Expo.isExpoPushToken(ag.pushtoken)) return Response(res, 200, ag);
+                    else{
+                        ag.update({
+                            pushtoken 
+                        })
+                        return Response(res, 200, ag)
+                    }
+                }else{
+                    return Response(res, 400, ag )
+                }
             })
             .catch(er => {
                 return Response(res, 500, er)
