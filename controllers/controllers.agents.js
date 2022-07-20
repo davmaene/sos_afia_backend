@@ -64,4 +64,22 @@ export const AgentsControllers = {
             return Response(res, 500, error);
         }
     },
+    loadme: async (req, res, next) => {
+        try {
+            await Agents.findOne({
+                where: {
+                    status: 1,
+                    email: email.toLowerCase()
+                }
+            })
+            .then(ag => {
+
+            })
+            .catch(er => {
+                return Response(res, 500, er)
+            })
+        } catch (error) {
+            return Response(res, 500, error)
+        }
+    }
 }
