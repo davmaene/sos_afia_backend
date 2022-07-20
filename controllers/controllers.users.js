@@ -161,7 +161,7 @@ export const UsersController = {
         }
     },
     // send customer message 
-    sendcustomizedsmsonsos: async () => {
+    sendcustomizedsmsonsos: async (req, res, next) => {
         try {
             const { phone, hospitalref, content } = req.body;
             // await 

@@ -7,6 +7,14 @@ export const Customersms = Configs.define('__tbl_customizedsms', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    from_token: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    to_token: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     fill: {
         type: Sequelize.STRING,
         allowNull: false,
