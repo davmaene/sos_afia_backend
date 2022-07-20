@@ -26,7 +26,7 @@ export const broadCastNotification = async ({ tokens, title, subtitle, body, dat
             response: data 
           }
         })
-      }
+    }
       
       let chunks = expo.chunkPushNotifications(messages);
       let tickets = [];
@@ -35,10 +35,12 @@ export const broadCastNotification = async ({ tokens, title, subtitle, body, dat
         for (let chunk of chunks) {
           try {
             let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
-            console.log(ticketChunk);
+            // console.log(ticketChunk);
             tickets.push(...ticketChunk);
+            cb(undefined, ticketChunk)
           } catch (error) {
             console.error(error);
+            cb(error, undefined)
           }
         }
       })();

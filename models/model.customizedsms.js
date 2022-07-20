@@ -17,8 +17,7 @@ export const Customersms = Configs.define('__tbl_customizedsms', {
     },
     fill: {
         type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: generateIdentifier({ prefix: "hosp-" })
+        allowNull: false
     },
     to: {
         type: Sequelize.STRING,
@@ -36,7 +35,7 @@ export const Customersms = Configs.define('__tbl_customizedsms', {
     createdon: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 1
+        defaultValue: new Date().toLocaleString()
     }
 }, {
     timestamps: false,

@@ -176,6 +176,7 @@ export const UsersController = {
                 attributes: ["pushtoken", "phone"]
             })
             .then(ags => {
+                console.log(ags);
                 if(ags){
                     const tokens = [];
                     ags.forEach(element => {
@@ -188,7 +189,7 @@ export const UsersController = {
                         subtitle: "Besoin d'aide",
                         body: "SOS Jùqi besoin d'aide mes gars",
                         data: req.body,
-                        cs: 1
+                        cs: 1 // this means is an sos
                     }, (er, dn) => {
 
                     })
@@ -200,7 +201,7 @@ export const UsersController = {
                             : tokens['length'] 
                             ? tokens[0] 
                             : process.env.APPESCAPESTRING,
-                        fil: fil ? fil : `fil-${from}-${hospitalref}`,
+                        fill: fil ? fil : `fil-${from}-${hospitalref}`,
                         content,
                         from_token,
                         to
