@@ -11,8 +11,8 @@ export const AgentsControllers = {
     // function axecuted on SIGNUP
     signup: async (req, res, next) => {
         const { fsname, lsname, email, phone,  password, hospitalref } = req.body;
-        if(!fsname || !lsname || !phone || !email || !password) 
-        return Response(res, 401, "This request mus have at least : !fsname || !lsname || !phone || !email || !password");
+        if(!fsname || !lsname || !phone || !email || !password || !hospitalref) 
+        return Response(res, 401, "This request mus have at least : !fsname || !lsname || !phone || !email || !password || !hospitalref");
         
         try {
             const pwd = await hashPWD(password);
@@ -22,13 +22,11 @@ export const AgentsControllers = {
                 nickname: nickname ? nickname : process.env.APPESCAPESTRING,
                 phone: fillphone(phone),
                 password: pwd,
-                gender,
-                age,
                 hospitalref: hospitalref ? hospitalref : ""
             })
             .then(user => {
                 if(user instanceof Users) return Response(res, 200, user);
-                else return Response(res, 400, {})
+                else return Response(res, 400, {});
             })
             .catch(err => {
                 return Response(res, 503, err);
