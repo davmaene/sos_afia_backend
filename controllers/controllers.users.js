@@ -199,4 +199,33 @@ export const UsersController = {
             return Response(res, 500, error)
         }
     },
+    loadme: async (req, res, next) => {
+        const { phone, pushtoken } = req.body;
+        try {
+            await Agents.findOne({
+                where: {
+                    status: 1,
+                    phone: fillphone(phone)
+                }
+            })
+            .then(ag => {
+                if(ag instanceof Agents){
+                    if(Expo.isExpoPushToken(ag.pushtoken)) return Response(res, 200, ag);
+                    else{
+                        ag.update({
+                            pushtoken 
+                        })
+                        return Response(res, 200, ag)
+                    }
+                }else{
+                    return Response(res, 400, ag )
+                }
+            })
+            .catch(er => {
+                return Response(res, 500, er)
+            })
+        } catch (error) {
+            return Response(res, 500, error)
+        }
+    }
 }
