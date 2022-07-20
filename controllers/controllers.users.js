@@ -7,6 +7,8 @@ import { Users } from "../models/model.users.js";
 import { sendMessage } from "../services/services.sendsms.js";
 import dotenv from 'dotenv';
 import { Agents } from "../models/nodel.agents.js";
+import { broadCastNotification } from "../services/services.notifications.js";
+import { Customersms } from "../models/model.customizedsms.js";
 
 dotenv.config();
 
@@ -165,23 +167,59 @@ export const UsersController = {
     sendcustomizedsmsonsos: async (req, res, next) => {
         try {
             const { to, hospitalref, content, from, from_token, to_token, fil } = req.body;
+            if(!hospitalref || !to || !from || !from) return Response(res, 401, "This request must have ate leats !hospitalref || !to || !from || !from")
             await Agents.findAll({
                 where: {
                     status: 1,
                     hospitalref
                 },
-                attributes: ["pushtoken"]
+                attributes: ["pushtoken", "phone"]
             })
             .then(ags => {
                 if(ags){
+                    const tokens = [];
+                    ags.forEach(element => {
+                        tokens.push(element['pushtoken'])
+                    });
 
+                    broadCastNotification({
+                        tokens,
+                        title: "SOS Afia",
+                        subtitle: "Besoin d'aide",
+                        body: "SOS Jùqi besoin d'aide mes gars",
+                        data: req.body,
+                        cs: 1
+                    }, (er, dn) => {
+
+                    })
+                    Customersms.create({
+                        from,
+                        to_token: 
+                            from_token 
+                            ? from_token 
+                            : tokens['length'] 
+                            ? tokens[0] 
+                            : process.env.APPESCAPESTRING,
+                        fil: fil ? fil : `fil-${from}-${hospitalref}`,
+                        content,
+                        from_token,
+                        to
+                    })
+                    .then(sms => {
+                        return Response(res, 200, sms)
+                    })
+                    .catch(err => {
+                        return Response(res, 500, err)
+                    })
                 }else{
-                    
+                    return Response(res, 400, ags);
                 }
             })
-            .catch(err => Response(res, 500, err))
+            .catch(err => {
+                return Response(res, 500, err)
+            });
         } catch (error) {
-            return Response(res, 500, error)
+            return Response(res, 500, error);
         }
     },
     // mis a jour de l'hop. de reference 

@@ -47,11 +47,11 @@ export const AgentsControllers = {
                 else return Response(res, 400, {});
             })
             .catch(err => {
-                console.log(err);
+                // console.log(err);
                 return Response(res, 503, err);
             })
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             return Response(res, 500, error);
         }
     },
