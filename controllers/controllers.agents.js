@@ -2,13 +2,30 @@ import dotenv from 'dotenv';
 import { Response } from '../helpers/helper.message.js';
 import { Agents } from '../models/nodel.agents.js';
 import { Users } from '../models/model.users.js';
-import { comparePWD, hashPWD } from '../helpers/helper.password';
-import { fillphone } from '../helpers/helper.fillphone';
+import { comparePWD, hashPWD } from '../helpers/helper.password.js';
+import { fillphone } from '../helpers/helper.fillphone.js';
 import { Expo } from 'expo-server-sdk';
 
 dotenv.config()
 
 export const AgentsControllers = {
+    list: async (req, res, next) => {
+        try {
+            await Agents.findAll({
+                where: {
+                    status: 1
+                }
+            })
+            .then(ags => {
+                return Response(res, 200, ags)
+            })
+            .catch(err =>{
+                return Response(res, 500, err)
+            })
+        } catch (error) {
+            return Response(res, 500, error)
+        }
+    },
     // function axecuted on SIGNUP
     signup: async (req, res, next) => {
         const { fsname, lsname, email, phone,  password, hospitalref } = req.body;
