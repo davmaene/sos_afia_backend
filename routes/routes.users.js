@@ -17,6 +17,7 @@ export const UserRoutes = express.Router()
     UserRoutes.post("/user/resendcode", UsersController.resendcodevalidation) // reenvoi du code de validation
     UserRoutes.post("/user/validate", UsersController.validateaccount) // reenvoi du code de validation
     UserRoutes.put("/user/updatehospitalref", UsersController.updatehospitalref) // mis a jour de l'opital de reference 
+    UserRoutes.post("/user/sendmessage", UsersController.sendcustomizedsmsonsos) // mis a jour de l'opital de reference 
 
 export const HospitalRoutes = express.Router()
     HospitalRoutes.get("/list", HospitalController.list)

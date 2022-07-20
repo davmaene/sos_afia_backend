@@ -163,7 +163,7 @@ export const UsersController = {
     // send customer message 
     sendcustomizedsmsonsos: async (req, res, next) => {
         try {
-            const { phone, hospitalref, content } = req.body;
+            const { to, hospitalref, content, from, from_token, to_token, fil } = req.body;
             // await 
         } catch (error) {
             return Response(res, 500, error)

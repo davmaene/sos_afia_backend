@@ -18,7 +18,7 @@ export const Customersms = Configs.define('__tbl_customizedsms', {
     fill: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: generateIdentifier({prefix: "hosp-"})
+        defaultValue: generateIdentifier({ prefix: "hosp-" })
     },
     to: {
         type: Sequelize.STRING,
