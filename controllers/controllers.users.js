@@ -173,7 +173,11 @@ export const UsersController = {
                 attributes: ["pushtoken"]
             })
             .then(ags => {
+                if(ags){
 
+                }else{
+                    
+                }
             })
             .catch(err => Response(res, 500, err))
         } catch (error) {

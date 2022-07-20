@@ -42,7 +42,10 @@ app.use("/api/ressources", WareValidateAccess, RessourcesRoutes)
 
 app.use("/api", WareValidateAccess, Routes);
 app.use((req, res, next) => {
-    return Response(res, 404, "There is nothing over here ! please the documentation!")
+    return Response(res, 404, {
+        message: "There is nothing over here ! please the documentation!",
+        route: req.url
+    })
 });
 
 app.listen(PORT, () => {

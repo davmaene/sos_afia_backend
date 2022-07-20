@@ -34,23 +34,24 @@ export const AgentsControllers = {
         
         try {
             const pwd = await hashPWD(password);
-            await Users.create({
+            await Agents.create({
                 fsname: fsname.toLowerCase(),
                 lsname: lsname.toLowerCase(),
-                nickname: nickname ? nickname : process.env.APPESCAPESTRING,
                 phone: fillphone(phone),
                 email: email.toLowerCase(),
                 password: pwd,
                 hospitalref: hospitalref ? hospitalref : ""
             })
             .then(user => {
-                if(user instanceof Users) return Response(res, 200, user);
+                if(user instanceof Agents) return Response(res, 200, user);
                 else return Response(res, 400, {});
             })
             .catch(err => {
+                console.log(err);
                 return Response(res, 503, err);
             })
         } catch (error) {
+            console.log(error);
             return Response(res, 500, error);
         }
     },

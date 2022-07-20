@@ -21,7 +21,8 @@ export const Agents = Configs.define('__tbl_agents', {
     },
     pushtoken: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        defaultValue: ""
     },
     password: {
         type: Sequelize.STRING,
