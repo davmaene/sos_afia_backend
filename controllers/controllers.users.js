@@ -6,6 +6,7 @@ import { SOS } from "../models/model.sos.js";
 import { Users } from "../models/model.users.js";
 import { sendMessage } from "../services/services.sendsms.js";
 import dotenv from 'dotenv';
+import { Agents } from "../models/nodel.agents.js";
 
 dotenv.config();
 
@@ -164,8 +165,17 @@ export const UsersController = {
     sendcustomizedsmsonsos: async (req, res, next) => {
         try {
             const { to, hospitalref, content, from, from_token, to_token, fil } = req.body;
-            // await 
-            console.log("Pas mal la vie => ", req.body);
+            await Agents.findAll({
+                where: {
+                    status: 1,
+                    hospitalref
+                },
+                attributes: ["pushtoken"]
+            })
+            .then(ags => {
+
+            })
+            .catch(err => Response(res, 500, err))
         } catch (error) {
             return Response(res, 500, error)
         }
