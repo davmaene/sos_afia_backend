@@ -11,5 +11,6 @@ export const Configs = new Sequelize(
         port: process.env.APPDBPORT,
         host: process.env.APPDBHOST,
         dialect: process.env.APPDBDIALECT
-});
+    }
+);
 
