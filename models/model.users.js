@@ -27,6 +27,10 @@ export const Users = Configs.define('__tbl_users', {
         type: Sequelize.INTEGER,
         allowNull: false
     },
+    pushtoken: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     password: {
         type: Sequelize.STRING,
         allowNull: false
