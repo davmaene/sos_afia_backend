@@ -170,6 +170,7 @@ export const UsersController = {
             return Response(res, 500, error)
         }
     },
+    // mis a jour de l'hop. de reference 
     updatehospitalref: async (req, res, next) => {
         const { hospitalref, id, phone } = req.body;
         try {
