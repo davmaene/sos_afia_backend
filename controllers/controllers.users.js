@@ -165,6 +165,7 @@ export const UsersController = {
         try {
             const { to, hospitalref, content, from, from_token, to_token, fil } = req.body;
             // await 
+            console.log("Pas mal la vie => ", req.body);
         } catch (error) {
             return Response(res, 500, error)
         }
