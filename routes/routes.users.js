@@ -20,5 +20,5 @@ export const UserRoutes = express.Router()
     UserRoutes.post("/user/sendmessage", UsersController.sendcustomizedsmsonsos) // mis a jour de l'opital de reference 
 
 export const HospitalRoutes = express.Router();
-    HospitalRoutes.get("/list", HospitalController.list);
-    HospitalRoutes.post("/hospital/add", HospitalController.addhospital);
+    HospitalRoutes.get("/list", HospitalController.list)
+    HospitalRoutes.post("/hospital/add", HospitalController.addhospital)
