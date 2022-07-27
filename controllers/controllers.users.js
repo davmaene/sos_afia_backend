@@ -18,7 +18,6 @@ export const UsersController = {
     // function axecuted on SIGNUP
     signup: async (req, res, next) => {
         const { fsname, lsname, nickname, phone, gender, age, password, hospitalref } = req.body;
-        console.log(" Erreur => ", req.body);
         if(!fsname || !lsname || !phone || !gender || !age || !password) 
         return Response(res, 401, "This request mus have at least !fsname || !lsname || !phone || !gender || !age || !password");
 

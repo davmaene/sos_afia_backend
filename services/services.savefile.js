@@ -63,6 +63,13 @@ export const saveFile = async ({ req, oldname, category }, cb) => {
                                 }
                             }
                         )
+                        compressing.gzip.compressFile(uploadPath, `assets/compressed/${tempname.substring(0, tempname.lastIndexOf(".") + 1)}.zip`)
+                        .then(done => {
+                            console.log(" Compressing done => ", done);
+                        })
+                        .catch(err => {
+                            console.log(" Erreur compressing => ", err);
+                        });
                         return Promise.resolve({
                             code: 2,
                             message: "Upload done !",
