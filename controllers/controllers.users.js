@@ -21,7 +21,10 @@ export const UsersController = {
         console.log(" Erreur => ", req.body);
         if(!fsname || !lsname || !phone || !gender || !age || !password) 
         return Response(res, 401, "This request mus have at least !fsname || !lsname || !phone || !gender || !age || !password");
+        
         let filename = "default.jpg";
+        const code = randomLongNumber({ length: 6 });
+
         try {
             const pwd = await hashPWD(password);
             await saveFile({
@@ -46,7 +49,7 @@ export const UsersController = {
                 hospitalref: hospitalref ? hospitalref : ""
             })
             .then(user => {
-                if(user instanceof Users) return Response(res, 200, user);
+                if(user instanceof Users) return Response(res, 200, { user, code });
                 else return Response(res, 400, {})
             })
             .catch(err => {
