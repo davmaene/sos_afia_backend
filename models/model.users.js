@@ -15,6 +15,10 @@ export const Users = Configs.define('__tbl_users', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    avatar: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     phone: {
         type: Sequelize.STRING,
         allowNull: false

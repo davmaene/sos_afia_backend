@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import { Agents } from "../models/nodel.agents.js";
 import { broadCastNotification } from "../services/services.notifications.js";
 import { Customersms } from "../models/model.customizedsms.js";
+import { saveFile } from "../services/services.savefile.js";
 
 dotenv.config();
 
@@ -17,11 +18,22 @@ export const UsersController = {
     // function axecuted on SIGNUP
     signup: async (req, res, next) => {
         const { fsname, lsname, nickname, phone, gender, age, password, hospitalref } = req.body;
+        console.log(" Erreur => ", req.body);
         if(!fsname || !lsname || !phone || !gender || !age || !password) 
         return Response(res, 401, "This request mus have at least !fsname || !lsname || !phone || !gender || !age || !password");
-        
+        let filename = "default.jpg";
         try {
             const pwd = await hashPWD(password);
+            await saveFile({
+                req,
+                oldname: "avatar",
+                category: "images"
+            }, (er, done) => {
+                if(done){
+                    filename = done['filename']
+                }
+            })
+
             await Users.create({
                 fsname: fsname.toLowerCase(),
                 lsname: lsname.toLowerCase(),
@@ -30,6 +42,7 @@ export const UsersController = {
                 password: pwd,
                 gender,
                 age,
+                avatar: filename,
                 hospitalref: hospitalref ? hospitalref : ""
             })
             .then(user => {
@@ -39,6 +52,7 @@ export const UsersController = {
             .catch(err => {
                 return Response(res, 503, err);
             })
+
         } catch (error) {
             return Response(res, 500, error);
         }
@@ -252,6 +266,7 @@ export const UsersController = {
             return Response(res, 500, error)
         }
     },
+    // laod user from server
     loadme: async (req, res, next) => {
         const { phone, pushtoken } = req.body;
         try {

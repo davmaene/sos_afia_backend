@@ -8,7 +8,13 @@ export const generateIdentifier = ({ prefix }) => {
     const sfx = Math.floor(Math.random() * 100);
     
     return `${prefix ? prefix : "REF"}-${pfx}-${sfx}`;
-}
+};
+
+export const generateFilename = ({ prefix, tempname }) => {
+    const extension = tempname.substring(tempname.lastIndexOf("."));
+    return `${prefix ? prefix : ""}${randomstring.generate()}${extension}`;
+};
+
 export const randomLongNumber = ({ length }) => {
     const len = length && !isNaN(parseInt(length)) ? length : 6;
     const ret = [];
@@ -20,4 +26,4 @@ export const randomLongNumber = ({ length }) => {
     let m = ret.join().toString();
     m = m.replace(/,/g, "");
     return m;
-}
+};
