@@ -21,21 +21,18 @@ export const UsersController = {
         console.log(" Erreur => ", req.body);
         if(!fsname || !lsname || !phone || !gender || !age || !password) 
         return Response(res, 401, "This request mus have at least !fsname || !lsname || !phone || !gender || !age || !password");
-        
+
         let filename = "default.jpg";
         const code = randomLongNumber({ length: 6 });
 
         try {
+
             const pwd = await hashPWD(password);
             await saveFile({
                 req,
                 oldname: "avatar",
                 category: "images"
-            }, (er, done) => {
-                if(done){
-                    filename = done['filename']
-                }
-            })
+            }, (er, done) => { if(done) filename = done['filename'] })
 
             await Users.create({
                 fsname: fsname.toLowerCase(),
