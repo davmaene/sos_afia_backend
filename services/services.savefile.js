@@ -63,7 +63,7 @@ export const saveFile = async ({ req, oldname, category }, cb) => {
                                 }
                             }
                         )
-                        compressing.gzip.compressFile(uploadPath, `assets/compressed/${tempname.substring(0, tempname.lastIndexOf(".") + 1)}.zip`)
+                        compressing.gzip.compressFile(uploadPath, `assets/compressed/${tempname}.zip`)
                         .then(done => {
                             console.log(" Compressing done => ", done);
                         })
