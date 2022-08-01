@@ -164,7 +164,7 @@ export const UsersController = {
                     //     phone: fillphone(process.env.MODULEGSMNUMBER),
                     //     content: `#code: SOS\n#coords: latitude->${latitude} | longitude->${longitude} | altitude->${altitude} | vitesse->${speed}`
                     // }, (err, done) => {});
-                    console.log(sos);
+                    // console.log(sos);
                     return Response(res, 200, sos)
                 }else{
                     return Response(res, 400, req.body)
