@@ -6,6 +6,7 @@ import { comparePWD, hashPWD } from '../helpers/helper.password.js';
 import { fillphone } from '../helpers/helper.fillphone.js';
 import { Expo } from 'expo-server-sdk';
 import { Op } from "sequelize";
+import { SOS } from '../models/model.sos.js';
 
 dotenv.config()
 
@@ -86,6 +87,25 @@ export const AgentsControllers = {
         } catch (error) {
             console.log("In catch => ", error);
             return Response(res, 500, error);
+        }
+    },
+    loadsoscase: async (req, res, next) => {
+        const { hospitalref } = req.params;
+        try {
+            await SOS.findAll({
+                where: {
+                    status: 1,
+                    hospitalref
+                }
+            })
+            .then(s => {
+                return Response(res, 200, s)
+            })
+            .catch(err => {
+                return Response(res, 500, err)
+            })
+        } catch (error) {
+            return Response(res, 500, error)
         }
     },
     loadme: async (req, res, next) => {
