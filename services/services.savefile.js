@@ -90,11 +90,13 @@ export const saveFile = async ({ req, oldname, category }, cb) => {
                     undefined
                 )
                 return Promise.reject(
-                    new Error(JSON.stringify(              {
-                        code: 4,
-                        message: "Error occured",
-                        data: error
-                    }))
+                    new Error(JSON.stringify( 
+                        {
+                            code: 4,
+                            message: "Error occured",
+                            data: error
+                        }
+                    ))
                 ).then(resolved, rejected)
             }
         }
