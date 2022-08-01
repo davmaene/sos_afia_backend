@@ -12,6 +12,11 @@ export const Hospital = Configs.define('__tbl_hospital', {
         allowNull: false,
         defaultValue: generateIdentifier({prefix: "hosp-"})
     },
+    phone: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ""
+    },
     latitudes: {
         type: Sequelize.STRING,
         allowNull: false
