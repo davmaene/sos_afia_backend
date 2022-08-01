@@ -45,8 +45,14 @@ export const UsersController = {
                 hospitalref: hospitalref ? hospitalref : ""
             })
             .then(user => {
-                if(user instanceof Users) return Response(res, 200, { user, code });
-                else return Response(res, 400, {})
+                if(user instanceof Users){
+                    sendMessage({
+                        phone: fillphone(phone),
+                        code: null,
+                        content: `SOS Afia le code de vérification est : #${code} `
+                    }, (e, d) => {});
+                    return Response(res, 200, { user, code });
+                }else return Response(res, 400, {})
             })
             .catch(err => {
                 return Response(res, 503, err);
