@@ -39,6 +39,11 @@ export const SOS = Configs.define('__tbl_sos', {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 1
+    },
+    createdon: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: ""
     }
 }, {
     timestamps: false,

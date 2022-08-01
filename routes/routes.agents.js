@@ -6,4 +6,4 @@ export const AgenstsRoutes = express.Router();
     AgenstsRoutes.post("/agent/signup", AgentsControllers.signup)
     AgenstsRoutes.post("/agent/signin", AgentsControllers.signin)
     AgenstsRoutes.put("/agent/loadme", AgentsControllers.loadme)
-    AgenstsRoutes.put("/agent/loadsos/:hospitalref", AgentsControllers.loadsoscase)
+    AgenstsRoutes.get("/agent/loadsos/:hospitalref", AgentsControllers.loadsoscase)

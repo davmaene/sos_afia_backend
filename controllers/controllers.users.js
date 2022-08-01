@@ -154,7 +154,8 @@ export const UsersController = {
              speed,
              hospitalref: hospitalref ? hospitalref : 0,
              phone: fillphone(phone),
-             refsos: generateIdentifier({prefix: "sos"})
+             refsos: generateIdentifier({prefix: "sos"}),
+             createdon: new Date().toLocaleString()
            })
            .then(sos => {
                 if(sos){
