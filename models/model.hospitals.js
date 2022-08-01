@@ -17,6 +17,11 @@ export const Hospital = Configs.define('__tbl_hospital', {
         allowNull: false,
         defaultValue: ""
     },
+    token: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ""
+    },
     latitudes: {
         type: Sequelize.STRING,
         allowNull: false
