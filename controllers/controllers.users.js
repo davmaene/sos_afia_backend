@@ -269,14 +269,14 @@ export const UsersController = {
     loadme: async (req, res, next) => {
         const { phone, pushtoken } = req.body;
         try {
-            await Agents.findOne({
+            await Users.findOne({
                 where: {
                     status: 1,
                     phone: fillphone(phone)
                 }
             })
             .then(ag => {
-                if(ag instanceof Agents){
+                if(ag instanceof Users){
                     if(Expo.isExpoPushToken(ag.pushtoken)) return Response(res, 200, ag);
                     else{
                         ag.update({

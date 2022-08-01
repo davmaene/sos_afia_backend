@@ -59,20 +59,20 @@ export const AgentsControllers = {
     // function executed on SIGNIN
     signin: async (req, res, next) => {
         const { email, password } = req.body;
+        console.log(req.body);
         if(!email || !password) return Response(res, 401, "This request mus have at least ! !phone || !password");
         try {
             await Agents.findOne({
                 where: {
                     [Op.or]: [
-                        { email: email.toString().toLowerCase() },
-                        { telephone: fillphone(email) }
+                        { phone: fillphone(email) },
+                        { email: email.toString().toLowerCase() }
                     ]
-                    // email: email.toLowerCase(),
-                    // status: 1
                 }
             })
             .then(user => {
-                if(user instanceof Users){
+                console.log(user);
+                if(user instanceof Agents){
                     comparePWD({hashedtext: user.password, oldplaintext: password}, (e, d) => {
                         if(d) return Response(res, 200, user);
                         else return Response(res, 203, {});
@@ -80,16 +80,16 @@ export const AgentsControllers = {
                 }else return Response(res, 203, {});
             })
             .catch(err => {
-                // console.log("In model => ", err);
+                console.log("In model => ", err);
                 return Response(res, 500, err);
             })
         } catch (error) {
-            // console.log("In catch => ", error);
+            console.log("In catch => ", error);
             return Response(res, 500, error);
         }
     },
     loadme: async (req, res, next) => {
-        const { email, pushtoken } = req.body;
+        const { phone, pushtoken } = req.body;
         try {
             await Agents.findOne({
                 where: {
