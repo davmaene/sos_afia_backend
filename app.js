@@ -42,6 +42,7 @@ app.use("/api/ressources", WareValidateAccess, RessourcesRoutes)
 
 app.use("/api", WareValidateAccess, Routes);
 app.use((req, res, next) => {
+    console.log(`This route is not found => `, req.url);
     return Response(res, 404, {
         message: "There is nothing over here ! please the documentation!",
         route: req.url

@@ -94,7 +94,7 @@ export const AgentsControllers = {
             await Agents.findOne({
                 where: {
                     status: 1,
-                    email: email.toLowerCase()
+                    phone: fillphone(phone)
                 }
             })
             .then(ag => {
@@ -111,9 +111,11 @@ export const AgentsControllers = {
                 }
             })
             .catch(er => {
+                console.log(er);
                 return Response(res, 500, er)
             })
         } catch (error) {
+            console.log(error);
             return Response(res, 500, error)
         }
     }
