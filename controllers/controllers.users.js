@@ -160,11 +160,10 @@ export const UsersController = {
            .then(sos => {
                 if(sos){
                     // `geo:${latitude},${longitude}`
-                    // sendMessage({
-                    //     phone: fillphone(process.env.MODULEGSMNUMBER),
-                    //     content: `#code: SOS\n#coords: latitude->${latitude} | longitude->${longitude} | altitude->${altitude} | vitesse->${speed}`
-                    // }, (err, done) => {});
-                    // console.log(sos);
+                    sendMessage({
+                        phone: fillphone(process.env.MODULEGSMNUMBER),
+                        content: `SOS`
+                    }, (err, done) => {});
                     return Response(res, 200, sos)
                 }else{
                     return Response(res, 400, req.body)
