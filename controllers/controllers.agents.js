@@ -5,6 +5,7 @@ import { Users } from '../models/model.users.js';
 import { comparePWD, hashPWD } from '../helpers/helper.password.js';
 import { fillphone } from '../helpers/helper.fillphone.js';
 import { Expo } from 'expo-server-sdk';
+import { Op } from "sequelize";
 
 dotenv.config()
 
@@ -62,8 +63,12 @@ export const AgentsControllers = {
         try {
             await Agents.findOne({
                 where: {
-                    email: email.toLowerCase(),
-                    status: 1
+                    [Op.or]: [
+                        { email: email.toString().toLowerCase() },
+                        { telephone: fillphone(email) }
+                    ]
+                    // email: email.toLowerCase(),
+                    // status: 1
                 }
             })
             .then(user => {
