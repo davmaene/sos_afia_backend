@@ -13,7 +13,8 @@ export const SOS = Configs.define('__tbl_sos', {
     },
     description: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
+        defaultValue: ""
     },
     phone: {
         type: Sequelize.STRING,
