@@ -195,7 +195,7 @@ export const UsersController = {
                 attributes: ["pushtoken", "phone"]
             })
             .then(ags => {
-                console.log(ags);
+                console.log(" Agent Infos => ", ags);
                 if(ags){
                     const tokens = [];
                     ags.forEach(element => {
@@ -211,12 +211,13 @@ export const UsersController = {
                         cs: 1 // this means is an sos
                     }, (er, dn) => {
 
-                    })
+                    });
+
                     Customersms.create({
                         from,
                         to_token: 
-                            from_token 
-                            ? from_token 
+                            to_token 
+                            ? to_token 
                             : tokens['length'] 
                             ? tokens[0] 
                             : process.env.APPESCAPESTRING,
