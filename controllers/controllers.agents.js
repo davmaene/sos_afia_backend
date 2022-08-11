@@ -8,17 +8,18 @@ import { Expo } from 'expo-server-sdk';
 import { Op } from "sequelize";
 import { SOS } from '../models/model.sos.js';
 import { Customersms } from '../models/model.customizedsms.js';
+import pkg from 'sequelize';
 
 dotenv.config()
 
 export const AgentsControllers = {
     groupchats: async (req, res, next) => {
         const { idagent, phone } = req.params
-        if(!idagent) return Response(res, 401, "This request must have at least !idagent || !phone");
+        if(!idagent) return Response(res, 401, "This request must have at least !idagent");
         try {
             await Customersms.findAll({
                 where: {
-                    to: idagent
+                    to: parseInt(idagent)
                 },
                 group: ["from"],
                 attibutes: [
@@ -27,7 +28,7 @@ export const AgentsControllers = {
                     "from_token",
                     "to_token",
                     "createdon",
-                    [pkg.fn('COUNT', pkg.col('from')), 'totalmessage']
+                    [pkg.fn('COUNT', pkg.col('to')), 'totalmessage']
                 ]
             })
             .then(sms => {
