@@ -14,7 +14,7 @@ dotenv.config()
 export const AgentsControllers = {
     groupchats: async (req, res, next) => {
         const { idagent, phone } = req.params
-        if(!idagent || !phone) return Response(res, 401, "This request must have at least !idagent || !phone");
+        if(!idagent) return Response(res, 401, "This request must have at least !idagent || !phone");
         try {
             await Customersms.findAll({
                 where: {
