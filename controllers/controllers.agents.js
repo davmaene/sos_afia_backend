@@ -7,10 +7,40 @@ import { fillphone } from '../helpers/helper.fillphone.js';
 import { Expo } from 'expo-server-sdk';
 import { Op } from "sequelize";
 import { SOS } from '../models/model.sos.js';
+import { Customersms } from '../models/model.customizedsms.js';
 
 dotenv.config()
 
 export const AgentsControllers = {
+    groupchats: async (req, res, next) => {
+        const { idagent, phone } = req.params
+        if(!idagent || !phone) return Response(res, 401, "This request must have at least !idagent || !phone");
+        try {
+            await Customersms.findAll({
+                where: {
+                    to: idagent
+                },
+                group: ["from"],
+                attibutes: [
+                    "from",
+                    "fill",
+                    "from_token",
+                    "to_token",
+                    "createdon",
+                    [pkg.fn('COUNT', pkg.col('from')), 'totalmessage']
+                ]
+            })
+            .then(sms => {
+
+            })
+            .catch(err => {
+                return Response(res, 500, err)
+            })
+        } catch (error) {
+            return Response(res, 500, error)
+        }
+    },
+    // liste des agents
     list: async (req, res, next) => {
         try {
             await Agents.findAll({
@@ -89,6 +119,7 @@ export const AgentsControllers = {
             return Response(res, 500, error);
         }
     },
+    // liste des SOS cases
     loadsoscase: async (req, res, next) => {
         const { hospitalref } = req.params;
         try {
@@ -108,6 +139,7 @@ export const AgentsControllers = {
             return Response(res, 500, error)
         }
     },
+    // chargement de l'utilisateur
     loadme: async (req, res, next) => {
         const { phone, pushtoken } = req.body;
         try {
