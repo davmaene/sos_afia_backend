@@ -32,7 +32,7 @@ export const AgentsControllers = {
                 ]
             })
             .then(sms => {
-                console.log(" Group SMS => ", sms);
+                // console.log(" Group SMS => ", sms);
                 return Response(res, 200, sms)
             })
             .catch(err => {
