@@ -274,6 +274,7 @@ export const UsersController = {
     // laod user from server
     loadme: async (req, res, next) => {
         const { phone, pushtoken } = req.body;
+        if(!phone || !pushtoken) return Response(res, 401, "This request mus have at least !phone || !pushtoke");
         try {
             await Users.findOne({
                 where: {

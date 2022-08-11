@@ -16,29 +16,41 @@ export const AgentsControllers = {
     groupchats: async (req, res, next) => {
         const { idagent, phone } = req.params
         if(!idagent) return Response(res, 401, "This request must have at least !idagent");
+
+        Users.hasOne(Customersms, { foreignKey: "from" });
+        Customersms.belongsTo(Users, { foreignKey: "from" });
+
         try {
             await Customersms.findAll({
                 where: {
                     to: parseInt(idagent)
                 },
                 group: ["from"],
-                attibutes: [
-                    "from",
-                    "fill",
-                    "from_token",
-                    "to_token",
-                    "createdon",
-                    [pkg.fn('COUNT', pkg.col('to')), 'totalmessage']
+                include: [
+                    {
+                        model: Users,
+                        required: true
+                    }
                 ]
+                // attibutes: [
+                //     "from",
+                //     "fill",
+                //     "from_token",
+                //     "to_token",
+                //     "createdon",
+                //     [pkg.fn('COUNT', pkg.col('to')), 'totalmessage']
+                // ]
             })
             .then(sms => {
                 // console.log(" Group SMS => ", sms);
                 return Response(res, 200, sms)
             })
             .catch(err => {
+                console.log(" Error =>  ", err);
                 return Response(res, 500, err)
             })
         } catch (error) {
+            console.log(" Une erreur vient de se produire ", error);
             return Response(res, 500, error)
         }
     },
@@ -144,6 +156,7 @@ export const AgentsControllers = {
     // chargement de l'utilisateur
     loadme: async (req, res, next) => {
         const { phone, pushtoken } = req.body;
+        if(!phone || !pushtoken) return Response(res, 401, "This request mus have at least !phone || !pushtoke");
         try {
             await Agents.findOne({
                 where: {
