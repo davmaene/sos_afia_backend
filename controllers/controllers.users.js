@@ -187,9 +187,10 @@ export const UsersController = {
         try {
             const { to, hospitalref, content, from, from_token, to_token, fil } = req.body;
             if(!hospitalref || !to || !from || !from) return Response(res, 401, "This request must have ate leats !hospitalref || !to || !from || !from")
-            console.log(" Requete body => ", req.body);
+
             await Agents.findAll({
                 where: {
+                    id: parseInt(to),
                     status: 1,
                     hospitalref: parseInt(hospitalref)
                 },
@@ -211,7 +212,7 @@ export const UsersController = {
                         data: req.body,
                         cs: 1 // this means is an sos
                     }, (er, dn) => {
-                        if(dn) console.log("Push sent ", dn);
+                     
                     });
 
                     Customersms.create({
