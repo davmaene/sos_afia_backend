@@ -19,7 +19,7 @@ export const UserRoutes = express.Router()
     UserRoutes.put("/user/updatehospitalref", UsersController.updatehospitalref) // mis a jour de l'opital de reference 
     UserRoutes.post("/user/sendmessage", UsersController.sendcustomizedsmsonsos) // mis a jour de l'opital de reference 
     UserRoutes.put("/user/loadme", UsersController.loadme)
-    UserRoutes.get("/agent/get/chat/:fill", UsersController.listmessage)
+    UserRoutes.get("/user/get/chat/:fill", UsersController.listmessage)
 
 export const HospitalRoutes = express.Router()
     HospitalRoutes.get("/list", HospitalController.list)
