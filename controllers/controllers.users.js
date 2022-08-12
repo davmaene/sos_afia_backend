@@ -10,11 +10,12 @@ import { Agents } from "../models/nodel.agents.js";
 import { broadCastNotification } from "../services/services.notifications.js";
 import { Customersms } from "../models/model.customizedsms.js";
 import { saveFile } from "../services/services.savefile.js";
+import { Expo } from 'expo-server-sdk';
 
 dotenv.config();
 
 export const UsersController = {
-    
+
     listmessage: async (req, res, next) => {
         const { fill } = req.params;
         if(!fill) return Response(res, 401, "This request mus have at least !fill");
@@ -321,9 +322,11 @@ export const UsersController = {
                 }
             })
             .catch(er => {
+                console.log(er);
                 return Response(res, 500, er)
             })
         } catch (error) {
+            console.log(error);
             return Response(res, 500, error)
         }
     }
