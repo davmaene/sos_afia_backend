@@ -17,7 +17,7 @@ export const AgentsControllers = {
     groupchats: async (req, res, next) => {
         const { idagent, phone } = req.params
         if(!idagent) return Response(res, 401, "This request must have at least !idagent");
-
+        console.log(" IdAgent => ", idagent);
         Users.hasOne(Customersms, { foreignKey: "from" });
         Customersms.belongsTo(Users, { foreignKey: "from" });
 
@@ -55,9 +55,11 @@ export const AgentsControllers = {
             return Response(res, 500, error)
         }
     },
+
     listmessage: async (req, res, next) => {
         const { fill } = req.params;
         if(!fill) return Response(res, 401, "This request mus have at least !fill");
+
         try {
             await Customersms.findAll({
                 where: {
