@@ -77,7 +77,7 @@ export const AgentsControllers = {
 
                     broadCastNotification({
                         tokens,
-                        title: fullnamefrom,
+                        title: fullnamefrom.toUpperCase(),
                         subtitle: "From from SOS Afia",
                         body: content,
                         data: req.body,

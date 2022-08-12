@@ -207,7 +207,7 @@ export const UsersController = {
 
                     broadCastNotification({
                         tokens,
-                        title: fullnamefrom,
+                        title: fullnamefrom.toUpperCase(),
                         subtitle: "Message from SOS Afia",
                         body: content,
                         data: req.body,
