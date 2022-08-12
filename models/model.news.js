@@ -7,7 +7,7 @@ export const News = Configs.define('__tbl_news', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    refhospital: {
+    hospitalref: {
         type: Sequelize.STRING,
         allowNull: false
     },
