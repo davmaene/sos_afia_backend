@@ -5,22 +5,21 @@ export const NewsControllers = {
 
     listbyrefhospital: async (req, res, next) => {
         const { hospitalref } = req.params;
+        console.log(hospitalref);
         try {
             await News.findAll({
                 where: {
                     status: 1,
-                    hospitalref:hospitalref
+                    hospitalref: parseInt(hospitalref)
                 }
             })
             .then(news => {
                 return Response(res, 200, news)
             })
             .catch(err => {
-                console.log(" Erreur => ", err);
                 return Response(res, 500, err)
             })
         } catch (error) {
-            console.log(" Erreur => ", error);
             return Response(res, 500, error)
         }
     },
