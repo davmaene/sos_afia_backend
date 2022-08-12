@@ -9,6 +9,7 @@ import { Op } from "sequelize";
 import { SOS } from '../models/model.sos.js';
 import { Customersms } from '../models/model.customizedsms.js';
 import pkg from 'sequelize';
+import { broadCastNotification } from '../services/services.notifications.js';
 
 dotenv.config()
 
@@ -17,7 +18,7 @@ export const AgentsControllers = {
     groupchats: async (req, res, next) => {
         const { idagent, phone } = req.params
         if(!idagent) return Response(res, 401, "This request must have at least !idagent");
-        console.log(" IdAgent => ", idagent);
+
         Users.hasOne(Customersms, { foreignKey: "from" });
         Customersms.belongsTo(Users, { foreignKey: "from" });
 
@@ -58,8 +59,9 @@ export const AgentsControllers = {
 
     sendmessage: async (req, res, next) => {
         const { to, hospitalref, content, from, from_token, to_token, fil, fullnamefrom } = req.body;
+        console.log(req.body);
         try {
-            if(!hospitalref || !to || !from || !from) return Response(res, 401, "This request must have at least !hospitalref || !to || !from || !from")
+            if(!hospitalref || !to || !from) return Response(res, 401, "This request must have at least !hospitalref || !to || !from || !from")
             await Users.findAll({
                 where: {
                     id: parseInt(from),
@@ -74,7 +76,6 @@ export const AgentsControllers = {
                     ags.forEach(element => {
                         tokens.push(element['pushtoken'])
                     });
-
                     broadCastNotification({
                         tokens,
                         title: fullnamefrom.toUpperCase(),
@@ -104,6 +105,7 @@ export const AgentsControllers = {
                         return Response(res, 200, sms)
                     })
                     .catch(err => {
+                        console.log(err);
                         return Response(res, 500, err)
                     })
                 }else{
@@ -111,9 +113,11 @@ export const AgentsControllers = {
                 }
             })
             .catch(err => {
+                console.log(err);
                 return Response(res, 500, err);
             });
         } catch (error) {
+            console.log(error);
             return Response(res, 500, error);
         }
     },

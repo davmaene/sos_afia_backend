@@ -14,7 +14,27 @@ import { saveFile } from "../services/services.savefile.js";
 dotenv.config();
 
 export const UsersController = {
+    
+    listmessage: async (req, res, next) => {
+        const { fill } = req.params;
+        if(!fill) return Response(res, 401, "This request mus have at least !fill");
 
+        try {
+            await Customersms.findAll({
+                where: {
+                    fill
+                }
+            })
+            .then(listes => {
+                return Response(res, 200, listes)
+            })
+            .catch(error => {
+                return Response(res, 500, error)
+            })
+        } catch (error) {
+            return Response(res, 500, error)
+        }
+    },
     // function axecuted on SIGNUP
     signup: async (req, res, next) => {
         const { fsname, lsname, nickname, phone, gender, age, password, hospitalref } = req.body;
