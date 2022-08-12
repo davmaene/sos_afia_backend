@@ -198,7 +198,7 @@ export const UsersController = {
                 attributes: ["pushtoken", "phone"]
             })
             .then(ags => {
-                console.log(" Agent Infos => ", ags);
+
                 if(ags){
                     const tokens = [];
                     ags.forEach(element => {
