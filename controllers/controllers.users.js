@@ -187,10 +187,11 @@ export const UsersController = {
         try {
             const { to, hospitalref, content, from, from_token, to_token, fil } = req.body;
             if(!hospitalref || !to || !from || !from) return Response(res, 401, "This request must have ate leats !hospitalref || !to || !from || !from")
+            console.log(" Requete body => ", req.body);
             await Agents.findAll({
                 where: {
                     status: 1,
-                    hospitalref
+                    hospitalref: parseInt(hospitalref)
                 },
                 attributes: ["pushtoken", "phone"]
             })
@@ -206,11 +207,11 @@ export const UsersController = {
                         tokens,
                         title: "SOS Afia",
                         subtitle: "Besoin d'aide",
-                        body: "SOS Jùqi besoin d'aide mes gars",
+                        body: content,
                         data: req.body,
                         cs: 1 // this means is an sos
                     }, (er, dn) => {
-
+                        if(dn) console.log("Push sent ", dn);
                     });
 
                     Customersms.create({
@@ -237,7 +238,7 @@ export const UsersController = {
                 }
             })
             .catch(err => {
-                return Response(res, 500, err)
+                return Response(res, 500, err);
             });
         } catch (error) {
             return Response(res, 500, error);
