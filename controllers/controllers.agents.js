@@ -57,7 +57,7 @@ export const AgentsControllers = {
     },
 
     sendmessage: async (req, res, next) => {
-        const { to, hospitalref, content, from, from_token, to_token, fil } = req.body;
+        const { to, hospitalref, content, from, from_token, to_token, fil, fullnamefrom } = req.body;
         try {
             if(!hospitalref || !to || !from || !from) return Response(res, 401, "This request must have at least !hospitalref || !to || !from || !from")
             await Users.findAll({
@@ -77,11 +77,11 @@ export const AgentsControllers = {
 
                     broadCastNotification({
                         tokens,
-                        title: "SOS Afia",
-                        subtitle: "Besoin d'aide",
+                        title: fullnamefrom,
+                        subtitle: "From from SOS Afia",
                         body: content,
                         data: req.body,
-                        cs: 1 // this means is an sos
+                        cs: 2 // this means is chat
                     }, (er, dn) => {
                      
                     });
@@ -98,7 +98,7 @@ export const AgentsControllers = {
                         content,
                         from_token,
                         to,
-                        pos: 1 // this means that is client
+                        pos: 2 // this means that is agent
                     })
                     .then(sms => {
                         return Response(res, 200, sms)

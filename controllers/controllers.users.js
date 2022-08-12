@@ -185,12 +185,13 @@ export const UsersController = {
     // send customer message 
     sendcustomizedsmsonsos: async (req, res, next) => {
         try {
-            const { to, hospitalref, content, from, from_token, to_token, fil } = req.body;
+
+            const { to, hospitalref, content, from, from_token, to_token, fil, fullnamefrom } = req.body;
             if(!hospitalref || !to || !from || !from) return Response(res, 401, "This request must have ate least !hospitalref || !to || !from || !from")
 
             await Agents.findAll({
                 where: {
-                    id: parseInt(to),
+                    // id: parseInt(to),
                     status: 1,
                     hospitalref: parseInt(hospitalref)
                 },
@@ -206,13 +207,13 @@ export const UsersController = {
 
                     broadCastNotification({
                         tokens,
-                        title: "SOS Afia",
-                        subtitle: "Besoin d'aide",
+                        title: fullnamefrom,
+                        subtitle: "Message from SOS Afia",
                         body: content,
                         data: req.body,
-                        cs: 1 // this means is an sos
+                        cs: 2 // this means is chat
                     }, (er, dn) => {
-                     
+                        // console.log(dn);
                     });
 
                     Customersms.create({

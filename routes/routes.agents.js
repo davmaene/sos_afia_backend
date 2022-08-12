@@ -9,3 +9,4 @@ export const AgenstsRoutes = express.Router();
     AgenstsRoutes.get("/agent/loadsos/:hospitalref", AgentsControllers.loadsoscase)
     AgenstsRoutes.get("/agent/loadsmsgroup/:idagent", AgentsControllers.groupchats)
     AgenstsRoutes.get("/agent/get/chat/:fill", AgentsControllers.listmessage)
+    AgenstsRoutes.post("/agent/sendmessage", AgentsControllers.sendmessage)
