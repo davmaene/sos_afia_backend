@@ -186,7 +186,7 @@ export const UsersController = {
     sendcustomizedsmsonsos: async (req, res, next) => {
         try {
             const { to, hospitalref, content, from, from_token, to_token, fil } = req.body;
-            if(!hospitalref || !to || !from || !from) return Response(res, 401, "This request must have ate leats !hospitalref || !to || !from || !from")
+            if(!hospitalref || !to || !from || !from) return Response(res, 401, "This request must have ate least !hospitalref || !to || !from || !from")
 
             await Agents.findAll({
                 where: {
@@ -226,7 +226,8 @@ export const UsersController = {
                         fill: fil ? fil : `fil-${from}-${hospitalref}`,
                         content,
                         from_token,
-                        to
+                        to,
+                        pos: 1 // this means that is client
                     })
                     .then(sms => {
                         return Response(res, 200, sms)

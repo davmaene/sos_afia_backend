@@ -56,6 +56,68 @@ export const AgentsControllers = {
         }
     },
 
+    sendmessage: async (req, res, next) => {
+        const { to, hospitalref, content, from, from_token, to_token, fil } = req.body;
+        try {
+            if(!hospitalref || !to || !from || !from) return Response(res, 401, "This request must have at least !hospitalref || !to || !from || !from")
+            await Users.findAll({
+                where: {
+                    id: parseInt(from),
+                    status: 1,
+                    hospitalref: parseInt(hospitalref)
+                },
+                attributes: ["pushtoken", "phone"]
+            })
+            .then(ags => {
+                if(ags){
+                    const tokens = [];
+                    ags.forEach(element => {
+                        tokens.push(element['pushtoken'])
+                    });
+
+                    broadCastNotification({
+                        tokens,
+                        title: "SOS Afia",
+                        subtitle: "Besoin d'aide",
+                        body: content,
+                        data: req.body,
+                        cs: 1 // this means is an sos
+                    }, (er, dn) => {
+                     
+                    });
+
+                    Customersms.create({
+                        from,
+                        to_token: 
+                            to_token 
+                            ? to_token 
+                            : tokens['length'] 
+                            ? tokens[0] 
+                            : process.env.APPESCAPESTRING,
+                        fill: fil ? fil : `fil-${from}-${hospitalref}`,
+                        content,
+                        from_token,
+                        to,
+                        pos: 1 // this means that is client
+                    })
+                    .then(sms => {
+                        return Response(res, 200, sms)
+                    })
+                    .catch(err => {
+                        return Response(res, 500, err)
+                    })
+                }else{
+                    return Response(res, 400, ags);
+                }
+            })
+            .catch(err => {
+                return Response(res, 500, err);
+            });
+        } catch (error) {
+            return Response(res, 500, error);
+        }
+    },
+
     listmessage: async (req, res, next) => {
         const { fill } = req.params;
         if(!fill) return Response(res, 401, "This request mus have at least !fill");
@@ -76,6 +138,7 @@ export const AgentsControllers = {
             return Response(res, 500, error)
         }
     },
+
     // liste des agents
     list: async (req, res, next) => {
         try {
@@ -179,6 +242,7 @@ export const AgentsControllers = {
     loadme: async (req, res, next) => {
         const { phone, pushtoken } = req.body;
         if(!phone || !pushtoken) return Response(res, 401, "This request mus have at least !phone || !pushtoke");
+
         try {
             await Agents.findOne({
                 where: {
