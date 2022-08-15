@@ -1,6 +1,9 @@
 import Sequelize from 'sequelize';
 import { generateIdentifier } from '../helpers/helper.random.js';
 import { Configs } from '../configs/configs.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const Customersms = Configs.define('__tbl_customizedsms', {
     from: {
@@ -9,7 +12,8 @@ export const Customersms = Configs.define('__tbl_customizedsms', {
     },
     from_token: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true,
+        defaultValue: process.env.APPESCAPESTRING
     },
     to_token: {
         type: Sequelize.STRING,
