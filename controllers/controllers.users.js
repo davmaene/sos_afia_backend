@@ -27,12 +27,15 @@ export const UsersController = {
                 }
             })
             .then(listes => {
+                console.log(" Liste of message => ", listes);
                 return Response(res, 200, listes)
             })
-            .catch(error => {
-                return Response(res, 500, error)
+            .catch(err => {
+                console.log(" Error on loading message => ", err)
+                return Response(res, 500, err)
             })
         } catch (error) {
+            console.log(" Error on loading message => ", error);
             return Response(res, 500, error)
         }
     },
@@ -252,19 +255,24 @@ export const UsersController = {
                         pos: 1 // this means that is client
                     })
                     .then(sms => {
+                        console.log(" Message sent => ", sms);
                         return Response(res, 200, sms)
                     })
                     .catch(err => {
+                        console.log(" Erreur on sending message => ", err);
                         return Response(res, 500, err)
                     })
                 }else{
+                    console.log(" Agent on scope on sending message => ", ags);
                     return Response(res, 400, ags);
                 }
             })
             .catch(err => {
+                console.log(" Error in sending message => ", err);
                 return Response(res, 500, err);
             });
         } catch (error) {
+            console.log(" Error on sending message => ", error);
             return Response(res, 500, error);
         }
     },
