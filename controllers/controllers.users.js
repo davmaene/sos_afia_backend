@@ -209,8 +209,8 @@ export const UsersController = {
     // send customer message 
     sendcustomizedsmsonsos: async (req, res, next) => {
         try {
-
             const { to, hospitalref, content, from, from_token, to_token, fil, fullnamefrom } = req.body;
+            console.log(" Your body is => ", req.body);
             if(!hospitalref || !to || !from || !from) return Response(res, 401, "This request must have ate least !hospitalref || !to || !from || !from")
 
             await Agents.findAll({
