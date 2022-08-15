@@ -250,7 +250,7 @@ export const UsersController = {
                             : process.env.APPESCAPESTRING,
                         fill: fil ? fil : `fil-${from}-${hospitalref}`,
                         content,
-                        from_token,
+                        from_token: from_token ? from_token : process.env.APPESCAPESTRING,
                         to,
                         pos: 1 // this means that is client
                     })
